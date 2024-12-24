@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authService } from "../backend-connection";
 import { logout } from "../redux/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
 interface Suggestion {
   username: string;
@@ -48,6 +49,7 @@ const Suggestions: React.FC = () => {
   const [loggedInUser, setLoggedInUser] = useState<UserProfile | null>(null);
   const loginUser = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoggedInUser(null);
@@ -68,6 +70,9 @@ const Suggestions: React.FC = () => {
       console.error("Failed to logout:", error);
     }
   };
+  const loginHandler = () => {
+    navigate("/login");
+  }
 
   return (
     <div className="rounded-lg shadow-lg p-4 mb-6 mx-8 w-full max-w-xs">
@@ -101,7 +106,7 @@ const Suggestions: React.FC = () => {
             <div className=" text-center">Login to use our app</div>
             <button
               className="text-blue-500 font-semibold hover:text-blue-900 dark:hover:text-white"
-              onClick={logoutHandler}
+              onClick={loginHandler}
             >
               Login
             </button>

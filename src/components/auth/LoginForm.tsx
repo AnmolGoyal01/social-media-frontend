@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 
 type LoginFormProps = {
-  onSubmit: (credentials: { identifier: string; password: string }) => void;
+  onSubmit: (credentials: {
+    username: string;
+    email: string;
+    password: string;
+  }) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [loginWith, setLoginWith] = useState<"username" | "email">("email");
+  const [loginWith, setLoginWith] = useState<"username" | "email">("username");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ identifier, password });
+    onSubmit({
+      username: loginWith === "username" ? identifier : "",
+      email: loginWith === "email" ? identifier : "",
+      password,
+    });
   };
 
   return (
@@ -21,7 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           {loginWith === "email" ? "Email" : "Username"}
         </label>
         <input
-          type="text"
+          type={`${loginWith === "email" ? "email" : "text"}`}
           id="identifier"
           placeholder={
             loginWith === "email" ? "Enter your email" : "Enter your username"
@@ -54,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           onClick={() =>
             setLoginWith((prev) => (prev === "email" ? "username" : "email"))
           }
-          className="text-blue-500 underline"
+          className="text-blue-500 underline hover:text-blue-600"
         >
           {loginWith === "email" ? "Use Username Instead" : "Use Email Instead"}
         </button>
@@ -62,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
       <button
         type="submit"
-        className="w-full rounded-md bg-blue-500 hover:bg-blue-600 py-2 text-white"
+        className={`w-full rounded-md bg-blue-500  hover:bg-blue-600 py-2 text-white ${(identifier === "" || password === "")? "cursor-not-allowed bg-blue-400" : "cursor-pointer"}`}
       >
         Login
       </button>

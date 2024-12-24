@@ -25,7 +25,8 @@ type MenuItem = {
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const darkMode = useSelector((state : RootState) => state.theme.darkMode);
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode);
+  const user = useSelector((state: RootState) => state.user);
   const menuItems: MenuItem[] = [
     {
       label: "Home",
@@ -40,7 +41,13 @@ const Sidebar: React.FC = () => {
     { label: "Messages", icon: <MessageSquare /> },
     { label: "Notifications", icon: <Bell /> },
     { label: "Create", icon: <Plus /> },
-    { label: "Profile", icon: <User /> },
+    {
+      label: "Profile",
+      icon: <User />,
+      onClick: () => {
+        navigate(`/${user.username}`)
+      },
+    },
     {
       label: `${darkMode ? "Dark" : "Light"} Mode`,
       icon: <SunMoon />,

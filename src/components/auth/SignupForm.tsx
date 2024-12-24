@@ -31,7 +31,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="username" className="block text-sm font-medium">
+        <label htmlFor="username" className="block text-sm font-medium" >
           Username
         </label>
         <input
@@ -108,7 +108,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
 
       <button
         type="submit"
-        className="w-full rounded-md bg-blue-500 py-2 text-white"
+        className="w-full rounded-md bg-blue-500 hover:bg-blue-600 py-2 text-white"
       >
         Sign Up
       </button>

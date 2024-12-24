@@ -23,8 +23,6 @@ function AppLayout() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // const login = await authService.login("anmolgoyal09@gmail.com", "654321")
-        // console.log(login);
         dispatch(logout());
         const user = await authService.getCurrentUser();
         if (user.sucess) {

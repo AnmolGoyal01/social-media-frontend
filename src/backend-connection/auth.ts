@@ -37,7 +37,7 @@ class AuthService {
         const match = htmlError.match(regex);
 
         if (match && match[1]) {
-          throw new Error(match[1].trim());  // Extract the error message from HTML
+          throw new Error(match[1].trim()); // Extract the error message from HTML
         }
       }
       throw new Error("An unexpected error occurred");
@@ -52,8 +52,17 @@ class AuthService {
         password,
       });
       return response.data;
-    } catch (error: any) {
-      throw error.response?.data || "Login failed.";
+    } catch (err: any) {
+      if (err.response && err.response.data) {
+        const htmlError = err.response.data;
+        const regex = /Error:\s*([^<]+)<br>/; // Regular expression to match the error message
+        const match = htmlError.match(regex);
+
+        if (match && match[1]) {
+          throw new Error(match[1].trim()); // Extract the error message from HTML
+        }
+      }
+      throw new Error("An unexpected error occurred");
     }
   }
 

@@ -14,7 +14,7 @@ const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({
   children,
   footerText,
   footerLink,
-  errors = '',
+  errors = "",
   footerAction,
 }) => {
   return (
@@ -22,13 +22,12 @@ const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({
       <h1 className="mb-4 text-center text-2xl font-semibold">{title}</h1>
       {children}
       <div className="mt-4 text-center text-sm">
-        {errors && (
-          <div className="text-red-700">
-            {errors}
-          </div>
-        )}
+        {errors && <div className="text-red-600 mb-2 text-base">{errors}</div>}
         {footerText}{" "}
-        <button onClick={footerAction} className="text-blue-500 underline">
+        <button
+          onClick={footerAction}
+          className="text-blue-500 hover:text-black dark:hover:text-white underline"
+        >
           {footerLink}
         </button>
       </div>
