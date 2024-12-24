@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import AuthFormWrapper from "@/components/auth/AuthFormWrapper";
 import SignupForm from "@/components/auth/SignupForm";
 import { authService } from "@/backend-connection";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/slices/userSlice";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<any>(null);
 
   const handleSignup = (details: {
@@ -16,17 +19,18 @@ const SignupPage: React.FC = () => {
     avatar?: File;
   }) => {
     setErrors(null);
-    console.log("Signup Data: ", details);
+    console.log(details);
     const callApi = async () => {
       try {
-        await authService.register(
+        const user = await authService.register(
           details.email,
           details.username,
           details.password,
           details.fullName,
           details.avatar
         );
-        navigate;
+        dispatch(login(user.data));
+        navigate("/");
       } catch (error) {
         console.error("Signup failed:", error);
         setErrors(error?.message);
@@ -41,7 +45,7 @@ const SignupPage: React.FC = () => {
       footerText="Already have an account?"
       footerLink="Login"
       footerAction={() => navigate("/login")}
-      errors = {errors || ""}
+      errors={errors || ""}
     >
       <SignupForm onSubmit={handleSignup} />
     </AuthFormWrapper>

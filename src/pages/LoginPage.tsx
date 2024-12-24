@@ -16,7 +16,6 @@ const LoginPage: React.FC = () => {
     username: string;
     password: string;
   }) => {
-    console.log("Login Data: ", credentials);
     setErrors(null);
     const callApi = async () => {
       try {

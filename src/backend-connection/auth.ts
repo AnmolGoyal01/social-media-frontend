@@ -18,16 +18,36 @@ class AuthService {
     avatar?: File
   ) {
     try {
-      const response = await this.apiClient.post("/api/v1/users/register", {
-        email,
-        username,
-        password,
-        fullName,
-        avatar,
-      });
+      // const response = await this.apiClient.post("/api/v1/users/register", {
+      //   email,
+      //   username,
+      //   password,
+      //   fullName,
+      //   avatar,
+      // });
+
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("fullName", fullName);
+      if (avatar) {
+        formData.append("avatar", avatar); // Append the file if provided
+      }
+
+      // Send the FormData using axios
+      const response = await this.apiClient.post(
+        "/api/v1/users/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Required for file uploads
+          },
+        }
+      );
       if (response.status < 300) {
         console.log("Registration successful");
-        this.login(email, username, password);
+        return this.login(email, username, password);
       }
       return response.data;
     } catch (err: any) {

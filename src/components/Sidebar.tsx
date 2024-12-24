@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="sticky top-0 h-screen w-20 lg:w-auto border-r bg-sidebarBg-light text-textPrimary-light dark:bg-sidebarBg-dark dark:text-textPrimary-dark transition-colors duration-300">
       <div className="m-8 text-center">
-        <h1 className="text-2xl font-bold hidden lg:block">Instagram</h1>
+        <h1 className="text-2xl font-bold hidden lg:block hover:cursor-pointer" onClick={()=>navigate("/")}>Instagram</h1>
         <h1 className="text-2xl font-bold lg:hidden">IG</h1>
       </div>
       <nav className="flex flex-col gap-2">
